@@ -15,40 +15,25 @@
   <script type="text/babel">
     const root = document.getElementById("root");
     function App() {
-      const [counter, setCounter] = React.useState(0);
-      const onClick = () {
-        // setCounter(counter + 1);
-        // 이런식으로 state에 직접 계산하는 것은 좋은 방법이 아니다
-        setCounter((current) => current + 1);
-        // current state를 기반으로 바꿔야 하는 경우 이렇게 함수로 접근해야
-        // 예상치 못한 문제가 발생할 확률이 적어진다.
-
-        // 1. 값으로 여러번
-        // function onClick() {
-        // setCounter(counter + 1);
-        // setCounter(counter + 1);
-        // setCounter(counter + 1);
-        // }
-
-        // 2. 함수로 여러번
-        // function onClick() {
-        // setCounter(current => current+ 1);
-        // setCounter(current => current+ 1);
-        // setCounter(current => current+ 1);
-        // }
-
-        // 1번으로 돌렸을 경우에는 setCounter를 몇번을 호출해도 한 번만 실행됨(counter가 1만 증가)
-        // 2번으로 돌렸을 경우에는 setCounter가 호출된 만큼 counter가 증가됨
-
-        // 즉, counter는 onClick 실행시에 이미 정해져 있는데, 이를 참고해서 +1을 해버리면
-        // 이 아래에서 다시 counter에 접근했을 때, 계산된 새로운 counter값이 아닌
-        // onClick 실행시 처음 참조했던 그것에 기반에 계산이 되는 것이다.
-
-      }
+      const [minutes, setMinutes] = React.useState();
+      const onChange = (event) => {
+        setMinutes(event.target.value);
+      };
+      const [hours, setHours] = React.useState();
       return (
         <div>
-          <h3>Total Clicks: {counter}</h3>
-          <button onClick={onClick}>Click!</button>
+          <h1>Custard Converter</h1>
+          <h4>{minutes != null ? minutes : 0}분을 변환!</h4>
+          <label htmlFor="Minutes">Minutes</label>
+          <input
+            value={minutes}
+            id="Minutes"
+            placeholder="Minutes"
+            type="number"
+            onChange={onChange}
+          />
+          <label htmlFor="Hours">Hours</label>
+          <input value={hours} id="Hours" placeholder="Hours" type="number" />
         </div>
       );
     }
