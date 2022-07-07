@@ -163,3 +163,41 @@ setToDos((priv) => [toDo, ...priv]);
 ```
 
 즉, 원래의 배열을 풀어서(...연산자, 스프레드 연산자라고 부름) 새로운 배열을 만드는 식입니다.
+
+## 7/8
+
+### React-Router-Dom - `Router`
+
+```javascript
+// react-router-dom v6 이상의 경우 아래의 문법을 따릅니다.
+// 이하 버전과 달라졌습니다.
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie" element={<Detail />} />
+      </Routes>
+    </Router>
+  );
+}
+```
+
+- BrowserRouter와 HashRouter의 차이: 경로 뒤에 샵(#)이 붙습니다. 현재 위치를 URL의 해쉬 부분에 저장한다는데 자세한건 더 찾아봐야 할 것 같습니다.
+- RRD v5 이하 버전에서는 `Switch`라는 컴포넌트를 사용한 것 같습니다. (알아두면 유용한 지식)
+
+### React-Router-Dom - `Link`
+
+`<a></a>`태그로 링크를 만드는게 정석이지만, 이럴 경우 페이지 전체가 로딩된다는 문제가 있습니다. 기왕 리액트 배운거 변화가 있는 일부 컴포넌트만 로딩하면 좋잖아요?
+
+그래서 리액트에서는 `<Link>` 컴포넌트를 사용합니다.
+
+```javascript
+<Link to="/movie">{title}</Link>
+```
+
+이 외에도 다양한 Navigation Components들이 있습니다. [공식 문서](https://v5.reactrouter.com/web/guides/primary-components)를 한번 읽어보면 좋겠습니다.
