@@ -1,6 +1,6 @@
 # React.js 맛보기!
 
-Front-End의 꽃인 `React.js`를 공부하고 있습니다.
+`React.js` 맛있어보인당 🍽️
 
 # TIL
 
@@ -133,6 +133,33 @@ console.log(mango1 === mango3); // true
 
 변수를 선언해 `object` 타입의 값으로 초기화 하면 그 값이 위치한 `reference`(주소값 같은 것)를 저장합니다.
 
-따라서 위의 코드에서는 `mango1`과 `mango2`의 값은 다르며, `mango2`와 `mango2`의 값은 같습니다.
+따라서 위의 코드에서는 `mango1`과 `mango2`의 값은 다르며, `mango2`와 `mango3`의 값은 같습니다.
 
 정리하면, **object의 equality는 같은 주소값일때만 true입니다**
+
+## 7/7
+
+### Cleanup Function
+
+```javascript
+useEffect(() => {
+  console.log("컴포넌트 렌더링시 실행");
+  return () => {
+    console.log("컴포넌트 파괴시 실행");
+  };
+}, []);
+```
+
+이제 이론 끝!! 실습 시작🚀🚀
+
+### setState와 array
+
+setState 함수를 실행할 때는 원래 값을 직접 modify할 수 없습니다.
+
+Array에 새로운 원소를 추가하는 경우 이렇게 하면 됩니다.
+
+```javascript
+setToDos((priv) => [toDo, ...priv]);
+```
+
+즉, 원래의 배열을 풀어서(...연산자, 스프레드 연산자라고 부름) 새로운 배열을 만드는 식입니다.

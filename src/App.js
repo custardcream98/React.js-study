@@ -1,41 +1,30 @@
-import './Button'
-import Button from './Button';
-import styles from './App.module.css'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function App() {
-    const [counter, setCounter] = useState(0);
-    const [keyword, setKeyword] = useState("");
+    const [toDo, setToDo] = useState("");
+    const [toDos, setToDos] = useState([]);
 
-    const onKeywordChange = (event) => setKeyword(event.target.value);
-    const onBtnClick = () => setCounter((current) => current + 1);
-
-    console.log("매번 렌더링 될 때마다 실행");
-
-    useEffect(() => {
-        console.log("처음 렌더링 될 때 한번만 실행");
-    }, []);
-
-    useEffect(() => {
-        if (counter !== 0) {
-            console.log("counter 눌렸을 때 실행");
+    const onChange = (event) => setToDo(event.target.value);
+    const onSubmit = (event) => {
+        event.preventDefault();
+        if (toDo === "") {
+            return;
         }
-    }, [counter]);
+        setToDos((priv) => [toDo, ...priv]);
+        setToDo("");
 
-    useEffect(() => {
-        if (keyword !== "") {
-            console.log("keyword 입력 됐을 때 실행");
-        }
-    }, [keyword]);
+        console.log(toDos);
+    };
 
     return (
         <div>
-            <input type="text" value={keyword} onChange={onKeywordChange}></input>
-            <h1 className={styles.title}>Hello World</h1>
-            <h2>{counter}</h2>
-            <Button text='이건 버튼이다 개꿀' onClick={onBtnClick} />
+            <h1>{toDos.length}개의 할 일이 있다네</h1>
+            <form onSubmit={onSubmit}>
+                <input onChange={onChange} value={toDo} type="text" placeholder="무엇인가? 할 일이 무엇이냔 말이야" />
+                <button>할 일 추가하기</button>
+            </form>
         </div>
-    );
+    )
 }
 
 export default App;
