@@ -1,30 +1,41 @@
-import { useState } from 'react';
+import { React, useState, useEffect } from 'react';
 
 function App() {
-    const [toDo, setToDo] = useState("");
-    const [toDos, setToDos] = useState([]);
-
-    const onChange = (event) => setToDo(event.target.value);
-    const onSubmit = (event) => {
-        event.preventDefault();
-        if (toDo === "") {
-            return;
-        }
-        setToDos((priv) => [toDo, ...priv]);
-        setToDo("");
-
-        console.log(toDos);
+    const [loading, setLoading] = useState(true);
+    const [movies, setMovies] = useState([]);
+    const getMovies = async () => {
+        const json = await (
+            await fetch(
+                `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
+            )
+        ).json();
+        setMovies(json.data.movies);
+        setLoading(false);
     };
+    useEffect(() => {
+        getMovies();
+    }, []);
 
     return (
         <div>
-            <h1>{toDos.length}개의 할 일이 있다네</h1>
-            <form onSubmit={onSubmit}>
-                <input onChange={onChange} value={toDo} type="text" placeholder="무엇인가? 할 일이 무엇이냔 말이야" />
-                <button>할 일 추가하기</button>
-            </form>
+            {loading ? <h1>영화 보자아 🍿</h1> :
+                <div>
+                    {movies.map((movie) => (
+                        <div key={movie.id}>
+                            <img src={movie.medium_cover_image} />
+                            <h2>{movie.title}</h2>
+                            <p>{movie.summary}</p>
+                            <ul>
+                                {movie.genres.map((g) => (
+                                    <li key={g}>{g}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            }
         </div>
-    )
+    );
 }
 
 export default App;
